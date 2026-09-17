@@ -20,9 +20,8 @@ jobs:
       - name: Install Tailscale
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://pkgs.tailscale.com/stable/tailscale-setup-latest-amd64.msi" -OutFile "$env:TEMP\tailscale.msi"
-          Start-Process msiexec.exe -ArgumentList "/i `"$env:TEMP\tailscale.msi`" /quiet /norestart" -Wait
-          Start-Sleep -Seconds 30
+          winget install Tailscale.Tailscale --accept-source-agreements --accept-package-agreements --silent
+          Start-Sleep -Seconds 15
           $ts = "C:\Program Files\Tailscale\tailscale.exe"
           if (-not (Test-Path $ts)) {
             $found = (where.exe tailscale 2>$null | Select-Object -First 1)
